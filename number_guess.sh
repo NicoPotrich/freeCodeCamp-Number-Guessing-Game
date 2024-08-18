@@ -19,3 +19,5 @@ else
   done
 fi
 
+echo -e "\nGuess the secret number between 1 and 1000:"
+read USER_RANDOM_NUMBER
