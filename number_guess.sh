@@ -12,7 +12,7 @@ USER_INFO=$($PSQL "SELECT username, games_played, best_game FROM users WHERE use
 if [[ -z $USER_INFO ]]
 then
   echo -e "\nWelcome, $USERNAME! It looks like this is your first time here."
-  INSERT_USER_RESULT=$($PSQL "INSERT INTO users(username, games_played, best_game) VALUES ('$USERNAME', 0, 1000)")
+  INSERT_USER_RESULT=$($PSQL "INSERT INTO users(username, games_played, best_game) VALUES ('$USERNAME', 1, 1000)")
 else
   echo "$USER_INFO" | while IFS="|" read USERNAME GAMES_PLAYED BEST_GAME
   do 
@@ -37,17 +37,16 @@ do
   read USER_RANDOM_NUMBER
 done
 
-while [[ $USER_RANDOM_NUMBER != $RANDOM_NUMBER ]]
+while [[ $USER_RANDOM_NUMBER -ne $RANDOM_NUMBER ]]
 do
   ((USER_ATTEMPTS++))
-  if [[ $USER_RANDOM_NUMBER > $RANDOM_NUMBER ]]
+  if [[ $USER_RANDOM_NUMBER -gt $RANDOM_NUMBER ]]
   then
     echo -e "\nIt's lower than that, guess again:"
-    read USER_RANDOM_NUMBER
   else
     echo -e "\nIt's higher than that, guess again:"
-    read USER_RANDOM_NUMBER
   fi
+  read USER_RANDOM_NUMBER
 done
   
 echo -e "\nYou guessed it in $USER_ATTEMPTS tries. The secret number was $RANDOM_NUMBER. Nice job!"
