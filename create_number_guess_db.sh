@@ -8,10 +8,17 @@ $PSQL "CREATE DATABASE number_guess;"
 
 # Connect to the number_guess database and create the users table
 psql --username=freecodecamp --dbname=number_guess <<EOF
-CREATE TABLE users (
-    username VARCHAR(22) PRIMARY KEY,
-    games_played INT NOT NULL,
-    best_game INT NOT NULL
+CREATE TABLE users(
+  user_id SERIAL PRIMARY KEY,
+  username VARCHAR(22) UNIQUE NOT NULL,
+  games_played INT DEFAULT 0,
+  best_game INT
+);
+
+CREATE TABLE games(
+  game_id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(user_id),
+  guesses INT NOT NULL
 );
 EOF
 
