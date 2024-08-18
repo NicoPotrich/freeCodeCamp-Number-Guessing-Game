@@ -48,16 +48,16 @@ do
     echo -e "\nIt's higher than that, guess again:"
     read USER_RANDOM_NUMBER
   fi
-  
-  echo -e "\nYou guessed it in $USER_ATTEMPTS tries. The secret number was $RANDOM_NUMBER. Nice job!"
-
-  if [[ $USER_ATTEMPTS -lt $BEST_GAME ]]
-  then
-    UPDATE_GAMES=$(
-                    $PSQL "UPDATE users 
-                          SET best_game = $USER_ATTEMPTS 
-                          WHERE username = '$USERNAME'"
-                  )
-  fi
 done
+  
+echo -e "\nYou guessed it in $USER_ATTEMPTS tries. The secret number was $RANDOM_NUMBER. Nice job!"
+
+if [[ $USER_ATTEMPTS -lt $BEST_GAME ]]
+then
+  UPDATE_GAMES=$(
+                  $PSQL "UPDATE users 
+                        SET best_game = $USER_ATTEMPTS 
+                        WHERE username = '$USERNAME'"
+                )
+fi
 
